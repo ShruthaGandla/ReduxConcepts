@@ -4,13 +4,13 @@ import ReactDOM from 'react-dom';
 
 
 //first step in redux is to create a store.
-import {createStore} from "redux";
+import {createStore,combineReducers} from "redux";
 
 //reducer method takes two arguments (state,action)which redux provides automatically
 //reducer returns the new state to the store.
 
 
-const reducer = (state = {
+const firstReducer = (state = {
     result:1,
     lastValues:[]
 },action) =>{
@@ -33,11 +33,31 @@ const reducer = (state = {
     return state;
 
 };
+//second reducer
+const secondReducer = (state = {
+    name: "Max",
+    age: 27
+}, action) => {
+    switch (action.type) {
+        case "SET_NAME":
+            state = {
+                ...state,
+                name: action.payload
+            };
+            break;
+        case "SET_AGE":
+            state = {
+                ...state,
+                age: action.payload
+            };
+            break;
+    }
+    return state;
+};
 
 
-//createStore() has two arguments 1st argument is the reducer,2nd argument:initial application-state which can be a jsobject or array e.t.c
-//In next step I create a sperate state object which is passed to the createStore default.
-const store = createStore(reducer);
+//here I am combining two reducers,because store accepts only one reducer argument
+const store = createStore(combineReducers({firstReducer, secondReducer}));
 
 //store has subsribed so that it can get the new state
 store.subscribe(() => {
@@ -56,4 +76,9 @@ store.dispatch({
     type:"ADD",
     payload:10
 
+});
+
+store.dispatch({
+    type: "SET_AGE",
+    payload: 30
 });
