@@ -1,10 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
-
-
+// import ReactDOM from 'react-dom';
 //first step in redux is to create a store.
-import {createStore,combineReducers} from "redux";
+import {createStore,combineReducers,applyMiddleware} from "redux";
+import { createLogger}  from "redux-logger";
 
 //reducer method takes two arguments (state,action)which redux provides automatically
 //reducer returns the new state to the store.
@@ -57,7 +55,9 @@ const secondReducer = (state = {
 
 
 //here I am combining two reducers,because store accepts only one reducer argument
-const store = createStore(combineReducers({firstReducer, secondReducer}));
+//also implemeted the use of middleware
+const loggerMiddleware =createLogger();
+const store = createStore(combineReducers({firstReducer, secondReducer}),applyMiddleware(loggerMiddleware));
 
 //store has subsribed so that it can get the new state
 store.subscribe(() => {
