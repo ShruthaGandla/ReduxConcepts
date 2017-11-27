@@ -8,11 +8,11 @@ import {createStore} from "redux";
 
 //reducer method takes two arguments (state,action)which redux provides automatically
 //reducer returns the new state to the store.
-
-const initialState ={
+const initialState = {
     result:1,
     lastValues:[]
 }
+
 const reducer = (state = initialState,action) =>{
 
     switch(action.type){
